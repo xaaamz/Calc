@@ -34,25 +34,29 @@ public class Qenty {
         System.out.println("Введите выражение:");
         String sc = scanner.nextLine();
         String[] spl = sc.split(" ");
-        if (arabicNumerals.contains(spl[0])) {
-            int num1 = (Integer.parseInt(spl[0]));
-            int num2 = (Integer.parseInt(spl[2]));
-            String operator = spl[1];
-            int result = calculate(num1, num2, operator);
-            System.out.println("Результат: " + result);
-        } else if (romanNumerals.contains(spl[0])) {
-            String num1 = spl[0];
-            String operator = spl[1];
-            String num2 = spl[2];
-            int result = calculate(romanMap.get(num1), romanMap.get(num2), operator);
-            if(result < 1 ){
-                throw new RuntimeException("Результат не может быть меньше 1");
-            }
-            System.out.println("Результат: " + intToRoman(result));
-        } else  {
-            throw new IllegalArgumentException("Вы ввели некорректное число");
-        }
+        if (spl.length > 3) throw new IllegalArgumentException("В выражении не может быть больше 3 символов");
+        calc(spl);
     }
+        private static void calc(String spl[]) {
+            if (arabicNumerals.contains(spl[0])) {
+                int num1 = (Integer.parseInt(spl[0]));
+                int num2 = (Integer.parseInt(spl[2]));
+                String operator = spl[1];
+                int result = calculate(num1, num2, operator);
+                System.out.println("Результат: " + result);
+            } else if (romanNumerals.contains(spl[0])) {
+                String num1 = spl[0];
+                String operator = spl[1];
+                String num2 = spl[2];
+                int result = calculate(romanMap.get(num1), romanMap.get(num2), operator);
+                if (result < 1) {
+                    throw new RuntimeException("Результат не может быть меньше 1");
+                }
+                System.out.println("Результат: " + intToRoman(result));
+            } else {
+                throw new IllegalArgumentException("Вы ввели некорректное число");
+            }
+        }
 
     private static int calculate(int num1, int num2, String operator) {
         switch (operator) {
